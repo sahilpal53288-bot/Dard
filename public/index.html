@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Game</title>
+</head>
+<body>
+  <h2>🎮 Demo Game</h2>
+
+  <input id="username" placeholder="Enter Name">
+  <button onclick="register()">Register</button>
+
+  <h3>Wallet: <span id="wallet">0</span></h3>
+
+  <input id="bet" placeholder="Bet Amount">
+  <input id="number" placeholder="Guess 1-5">
+  <button onclick="play()">Play</button>
+
+  <h3 id="result"></h3>
+
+<script>
+async function register() {
+  const username = document.getElementById("username").value;
+
+  const res = await fetch("/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username })
+  });
+
+  const data = await res.json();
+  document.getElementById("wallet").innerText = data.wallet;
+}
+
+async function play() {
+  const username = document.getElementById("username").value;
+  const bet = Number(document.getElementById("bet").value);
+  const number = Number(document.getElementById("number").value);
+
+  const res = await fetch("/play", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, bet, number })
+  });
+
+  const data = await res.json();
+
+  document.getElementById("result").innerText =
+    "Result: " + data.result;
+
+  document.getElementById("wallet").innerText =
+    data.wallet;
+}
+</script>
+</body>
+</html>
