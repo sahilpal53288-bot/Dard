@@ -10,7 +10,7 @@ let admin = { username: "admin", password: "1234" };
 
 // Register
 app.post("/register", (req, res) => {
-  const { username, password } = req.body;
+  const { sahil63, 1234 } = req.body;
 
   if (users.find(u => u.username === username)) {
     return res.json({ message: "User already exists" });
