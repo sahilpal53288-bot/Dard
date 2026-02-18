@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head><title>Wingo Game</title></head>
+<body style="text-align:center;padding:50px;background:#222;color:white;font-family:Arial;">
+<h2>🎲 Wingo</h2>
+<h3>Guess 1–50</h3>
+
+<input id="bet" placeholder="Bet Amount">
+<input id="number" placeholder="Your Guess">
+<button onclick="playWingo()">Play</button>
+<p id="result"></p>
+
+<script>
+function playWingo(){
+  const bet = Number(document.getElementById("bet").value);
+  const guess = Number(document.getElementById("number").value);
+  const result = Math.floor(Math.random()*50)+1;
+
+  if(guess===result){
+    resultMsg = "🎉 You won! Number was "+result;
+  }else{
+    resultMsg = "❌ You lost! Number was "+result;
+  }
+  document.getElementById("result").innerText = resultMsg;
+}
+</script>
+</body>
+</html>
