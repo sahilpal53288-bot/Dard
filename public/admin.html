@@ -83,3 +83,95 @@ async function createUser() {
   loadUsers(); // Optional: refresh user list
 }
 </script>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Login</title>
+</head>
+<body style="background:#111;color:white;text-align:center;padding:50px;font-family:Arial;">
+<h2>Admin Login</h2>
+<input id="username" placeholder="Username"><br><br>
+<input id="password" type="password" placeholder="Password"><br><br>
+<button onclick="login()">Login</button>
+<p id="msg"></p>
+
+<script>
+async function login() {
+  const res = await fetch("/admin-login", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      username: username.value,
+      password: password.value
+    })
+  });
+
+  const data = await res.json();
+  msg.innerText = data.success ? "Login successful!" : "Invalid login!";
+  if (data.success) window.location = "admin-panel.html";
+}
+</script>
+</body>
+</html> 
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+</head>
+<body style="background:#111;color:white;font-family:Arial;padding:20px;text-align:center;">
+<h2>Admin Panel</h2>
+
+<h3>Create User</h3>
+<input id="newuser" placeholder="Username">
+<input id="newpass" placeholder="Password">
+<button onclick="createUser()">Create User</button>
+<p id="msg"></p>
+<hr>
+
+<h3>All Users</h3>
+<button onclick="loadUsers()">Refresh List</button>
+<ul id="userList"></ul>
+<hr>
+
+<h3>Update Wallet</h3>
+<input id="walletUser" placeholder="Username">
+<input id="amount" placeholder="Amount (+100 / -50)">
+<button onclick="updateWallet()">Update</button>
+
+<script>
+async function createUser() {
+  const res = await fetch("/create-user", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      username: newuser.value,
+      password: newpass.value
+    })
+  });
+  const data = await res.json();
+  msg.innerText = data.message;
+  loadUsers();
+}
+
+async function loadUsers() {
+  const res = await fetch("/users");
+  const data = await res.json();
+  userList.innerHTML = "";
+  data.forEach(u => userList.innerHTML += `<li>${u.username} - Wallet: ₹${u.wallet}</li>`);
+}
+
+async function updateWallet() {
+  const res = await fetch("/update-wallet", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      username: walletUser.value,
+      amount: amount.value
+    })
+  });
+  const data = await res.json();
+  msg.innerText = data.message + " (New Balance: ₹" + data.wallet + ")";
+}
+</script>
+</body>
+</html>
