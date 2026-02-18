@@ -23,3 +23,44 @@ async function login(){
 </script>
 </body>
 </html>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sah365 Login</title>
+</head>
+<body>
+
+<h2>User Login</h2>
+
+<input id="username" placeholder="Username"><br><br>
+<input id="password" type="password" placeholder="Password"><br><br>
+
+<button onclick="login()">Login</button>
+
+<p id="msg"></p>
+
+<script>
+async function login() {
+
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  const res = await fetch("/user-login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    localStorage.setItem("username", username);
+    window.location.href = "select-game.html";
+  } else {
+    document.getElementById("msg").innerText = "Login Failed!";
+  }
+}
+</script>
+
+</body>
+</html>
