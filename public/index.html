@@ -83,7 +83,111 @@ async function login() {
   });
 
   const data = await res.json();
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SAH365 - Play & Win Big!</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f0f0f;
+      color: #fff;
+    }
+    header {
+      background: #111;
+      padding: 15px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 30px;
+      color: gold;
+    }
+    nav a {
+      margin: 0 15px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .live-winners {
+      background: #222;
+      padding: 12px;
+      font-size: 18px;
+      color: #0f0;
+      text-align: center;
+      margin-top: 8px;
+    }
+    .games-section {
+      display: flex;
+      justify-content: space-around;
+      margin: 25px;
+    }
+    .game-box {
+      background: #1a1a1a;
+      border: 2px solid gold;
+      width: 180px;
+      padding: 15px;
+      text-align: center;
+      border-radius: 8px;
+    }
+    .game-box img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+    .game-box span {
+      display: block;
+      margin-top: 8px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      background: gold;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 6px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
 
+<header>
+  <h1>🎰 SAH365</h1>
+  <nav>
+    <a href="index.html">Login</a>
+    <a href="register.html">Register</a>
+  </nav>
+</header>
+
+<div class="live-winners">
+  🎉 Live Winners: Arjun won ₹3,45,000 • Priya won ₹2,78,500 • Vikram won ₹4,12,000
+</div>
+
+<section class="games-section">
+  <div class="game-box">
+    <img src="https://via.placeholder.com/100" alt="Wingo">
+    <span>Wingo</span>
+    <a class="btn" href="wingo.html">Play Now</a>
+  </div>
+  <div class="game-box">
+    <img src="https://via.placeholder.com/100" alt="Slot">
+    <span>Slots</span>
+    <a class="btn" href="slot.html">Play Now</a>
+  </div>
+  <div class="game-box">
+    <img src="https://via.placeholder.com/100" alt="Avatar">
+    <span>Avatar</span>
+    <a class="btn" href="avatar.html">Play Now</a>
+  </div>
+</section>
+
+</body>
+</html>
   if (data.success) {
     localStorage.setItem("username", username);
     window.location.href = "/select-game.html";  // ⚠ slash जरूरी
