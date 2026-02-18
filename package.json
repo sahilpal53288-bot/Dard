@@ -1,5 +1,4 @@
-{
-  "name": "dard-app",
+"name": "dard-app",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
