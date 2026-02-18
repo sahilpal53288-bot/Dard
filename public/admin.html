@@ -1,20 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Admin Panel - SAH365</title>
-</head>
-<body>
-<h2>Admin Panel</h2>
-<button onclick="loadUsers()">Load Users</button>
-<pre id="users"></pre>
+<h2>Admin Login</h2>
+<input id="username" placeholder="Admin Username">
+<input id="password" placeholder="Password">
+<button onclick="adminLogin()">Login</button>
+
+<pre id="data"></pre>
 
 <script>
-async function loadUsers(){
-  const res = await fetch("/api/users");
-  const data = await res.json();
-  document.getElementById("users").innerText =
-    JSON.stringify(data,null,2);
+async function adminLogin() {
+  const res = await fetch("/admin-login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: username.value,
+      password: password.value
+    })
+  });
+
+  const result = await res.json();
+  if (result.users) {
+    data.innerText = JSON.stringify(result.users, null, 2);
+  } else {
+    data.innerText = result.message;
+  }
 }
 </script>
-</body>
-</html>
