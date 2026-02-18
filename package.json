@@ -1,8 +1,12 @@
-"name": "dard-app",
+{
+  "name": "dard-app",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
+  },
+  "engines": {
+    "node": "18.x"
   },
   "dependencies": {
     "express": "^4.18.2"
