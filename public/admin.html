@@ -67,3 +67,19 @@ async function updateWallet() {
 
 </body>
 </html>
+<script>
+async function createUser() {
+  const res = await fetch("/create-user", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: newuser.value,
+      password: newpass.value
+    })
+  });
+
+  const data = await res.json();
+  msg.innerText = data.message;
+  loadUsers(); // Optional: refresh user list
+}
+</script>
