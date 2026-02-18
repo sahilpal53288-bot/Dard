@@ -204,3 +204,22 @@ app.post("/api/avatar-play", (req,res)=>{
 app.listen(PORT, ()=>console.log("Server running on port "+PORT));
 window.location.href = "https://google.com";
 window.location = "/home.html";
+app.post("/register", (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.json({ success:false, message:"Enter username & password" });
+  }
+
+  if (users.find(u => u.username === username)) {
+    return res.json({ success:false, message:"User already exists" });
+  }
+
+  users.push({
+    username,
+    password,
+    wallet: 1000   // 👈 automatic 1000 coin
+  });
+
+  res.json({ success:true, message:"Registered Successfully" });
+});
