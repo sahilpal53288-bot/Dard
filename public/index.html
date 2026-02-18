@@ -1,110 +1,26 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>SAH365</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body { background:#0b1d3a; color:white; font-family:Arial; text-align:center; }
-    input, button { padding:10px; margin:5px; }
-    .card { background:#122a52; padding:15px; margin:10px; border-radius:10px; }
-  </style>
-</head>
-<body>
-
-<h1>🔥 SAH365</h1>
-
-<div class="card">
-  <h3>Register</h3>
-  <input id="ruser" placeholder="Username">
-  <input id="rpass" placeholder="Password" type="password">
-  <button onclick="register()">Register</button>
-</div>
-
-<div class="card">
-  <h3>Login</h3>
-  <input id="luser" placeholder="Username">
-  <input id="lpass" placeholder="Password" type="password">
-  <button onclick="login()">Login</button>
-</div>
-
-<div class="card">
-  <h3>Wallet: <span id="wallet">0</span></h3>
-  <input id="bet" placeholder="Bet Amount">
-  <button onclick="play()">Play Color Game</button>
-  <h3 id="result"></h3>
-</div>
-
-<div class="card">
-  <h3>Admin Login</h3>
-  <input id="auser" placeholder="Admin Username">
-  <input id="apass" placeholder="Admin Password" type="password">
-  <button onclick="adminLogin()">Login</button>
-</div>
+<h2>Login</h2>
+<input id="username" placeholder="Username">
+<input id="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<p id="msg"></p>
 
 <script>
-let currentUser = "";
-
-async function register() {
-  const res = await fetch("/api/register", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json"},
-    body:JSON.stringify({
-      username:ruser.value,
-      password:rpass.value
-    })
-  });
-  const data = await res.json();
-  alert(data.message || "Registered");
-}
-
 async function login() {
-  const res = await fetch("/api/login", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json"},
-    body:JSON.stringify({
-      username:luser.value,
-      password:lpass.value
+  const res = await fetch("/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: username.value,
+      password: password.value
     })
   });
-  const data = await res.json();
-  if(data.success){
-    currentUser = luser.value;
-    wallet.innerText = data.wallet;
-    alert("Login Success");
-  } else alert("Login Failed");
-}
 
-async function play() {
-  const res = await fetch("/api/play", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json"},
-    body:JSON.stringify({
-      username:currentUser,
-      bet:Number(bet.value)
-    })
-  });
   const data = await res.json();
-  if(data.success){
-    result.innerText = data.result;
-    wallet.innerText = data.wallet;
+  msg.innerText = data.message;
+
+  if (data.message === "Login success") {
+    localStorage.setItem("user", username.value);
+    window.location = "dashboard.html";
   }
 }
-
-async function adminLogin(){
-  const res = await fetch("/api/admin-login",{
-    method:"POST",
-    headers:{ "Content-Type":"application/json"},
-    body:JSON.stringify({
-      username:auser.value,
-      password:apass.value
-    })
-  });
-  const data = await res.json();
-  if(data.success){
-    window.location = "/admin.html";
-  } else alert("Wrong Admin");
-}
 </script>
-
-</body>
-</html>
