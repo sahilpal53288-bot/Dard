@@ -203,3 +203,4 @@ app.post("/api/avatar-play", (req,res)=>{
 
 app.listen(PORT, ()=>console.log("Server running on port "+PORT));
 window.location.href = "https://google.com";
+window.location = "/home.html";
