@@ -1,23 +1,66 @@
+const express = require("express");
 const app = express();
-const path = require("path");
+const PORT = 3000;
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static("public"));
 
 let users = [];
+let admin = { username: "admin", password: "1234" };
 
-app.post("/api/register", (req, res) => {
+// Register
+app.post("/register", (req, res) => {
   const { username, password } = req.body;
-  users.push({ username, password });
-  res.json({ message: "User registered successfully" });
+
+  if (users.find(u => u.username === username)) {
+    return res.json({ message: "User already exists" });
+  }
+
+  users.push({ username, password, wallet: 1000 });
+  res.json({ message: "Registered", wallet: 1000 });
 });
 
-app.get("/api/users", (req, res) => {
-  res.json(users);
+// Login
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+
+  const user = users.find(
+    u => u.username === username && u.password === password
+  );
+
+  if (!user) return res.json({ message: "Invalid login" });
+
+  res.json({ message: "Login success", wallet: user.wallet });
 });
 
-const PORT = process.env.PORT || 3000;
+// Play Game
+app.post("/play", (req, res) => {
+  const { username, bet, number } = req.body;
+  const user = users.find(u => u.username === username);
 
-app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
+  if (!user) return res.json({ message: "User not found" });
+  if (user.wallet < bet) return res.json({ message: "Not enough balance" });
+
+  const random = Math.floor(Math.random() * 5) + 1;
+
+  if (random === number) {
+    user.wallet += bet;
+    res.json({ message: "You Win!", wallet: user.wallet });
+  } else {
+    user.wallet -= bet;
+    res.json({ message: "You Lose!", wallet: user.wallet });
+  }
 });
+
+// Admin Login
+app.post("/admin-login", (req, res) => {
+  const { username, password } = req.body;
+
+  if (username === admin.username && password === admin.password) {
+    res.json({ message: "Admin login success", users });
+  } else {
+    res.json({ message: "Wrong admin login" });
+  }
+});
+
+app.listen(PORT, () => console.log("Server running"));
