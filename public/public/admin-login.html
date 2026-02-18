@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head><title>Admin Login</title></head>
+<body style="background:#111;color:white;text-align:center;padding:50px;font-family:Arial;">
+<h2>Admin Login</h2>
+<input id="username" placeholder="Username"><br><br>
+<input id="password" type="password" placeholder="Password"><br><br>
+<button onclick="login()">Login</button>
+<p id="msg"></p>
+
+<script>
+async function login() {
+  const res = await fetch("/admin-login", {
+    method:"POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+      username: username.value,
+      password: password.value
+    })
+  });
+
+  const data = await res.json();
+  msg.innerText = data.success ? "Login successful!" : "Invalid login!";
+  if(data.success) window.location = "admin-panel.html";
+}
+</script>
+</body>
+</html>
