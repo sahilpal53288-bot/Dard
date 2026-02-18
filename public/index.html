@@ -1,158 +1,25 @@
-<title>bhavanipur Login</title>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>SAH365 Login</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #000000, #1a1a1a);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      color: white;
-    }
-
-    .login-box {
-      background: #111;
-      padding: 30px;
-      border-radius: 12px;
-      width: 320px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(255,215,0,0.4);
-      border: 1px solid gold;
-    }
-
-    .logo {
-      font-size: 26px;
-      font-weight: bold;
-      color: gold;
-      margin-bottom: 20px;
-    }
-
-    input {
-      width: 90%;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 6px;
-      border: none;
-      outline: none;
-    }
-
-    button {
-      width: 95%;
-      padding: 10px;
-      background: gold;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 6px;
-      margin-top: 10px;
-    }
-
-    button:hover {
-      background: orange;
-    }
-
-    a {
-      color: gold;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
-    #msg {
-      margin-top: 10px;
-      font-size: 14px;
-      color: red;
-    }
-  </style>
-</head>
-
-<body>
-
-<div class="login-box">
-  <div class="logo">SAH365</div>
-
-  <input id="username" placeholder="Username">
-  <input id="password" type="password" placeholder="Password">
-
-  <button onclick="login()">Login</button>
-
-  <p style="margin-top:15px;">
-    New user? <a href="register.html">Register Now</a>
-  </p>
-
-  <p id="msg"></p>
-</div>
-
-<script>
-async function login() {
-  const res = await fetch("/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      username: username.value,
-      password: password.value
-    })
-  });
-
-  const data = await res.json();
-  msg.innerText = data.message;
-
-  if (data.message === "Login success") {
-    localStorage.setItem("user", username.value);
-    window.location = "dashboard.html";
-  }
-}
-</script>
-
-</body>
-</html>
-<p style="margin-top:15px;">
-  New user? <a href="register.html">Register Now</a>
-</p>
-/register.html
-<p style="margin-top:15px;">
-  New user? 
-  <a href="https://wa.me/6386749548" target="_blank">
-    Register Now
-  </a>
-</p>
 <!DOCTYPE html>
 <html>
 <head><title>Sah365 Casino</title></head>
-<body style="text-align:center;padding:50px;font-family:Arial;background:#111;color:white;">
-
+<body style="text-align:center;padding:50px;background:#111;color:white;font-family:Arial;">
 <h2>🎰 Sah365 Casino</h2>
 
-<h3>User Login</h3>
 <input id="username" placeholder="Username"><br><br>
 <input id="password" type="password" placeholder="Password"><br><br>
-<button onclick="login()">Login & Open Game</button>
+<button onclick="login()">Login & Open Games</button>
 <p id="msg"></p>
 
 <script>
 async function login(){
-  const res = await fetch("/user-login",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      username: username.value,
-      password: password.value
-    })
+  const res = await fetch("/user-login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username: username.value, password: password.value })
   });
   const data = await res.json();
-  msg.innerText = data.success ? "Login Successful!" : "Invalid Login!";
-  if(data.success){
-    // Open main casino page
-    window.location = "bingo.html"; // Example: Bingo game
-  }
+  msg.innerText = data.success ? "Login Successful" : "Invalid Login";
+  if(data.success) window.location = "wingo.html"; // direct to Wingo game
 }
 </script>
-
 </body>
 </html>
