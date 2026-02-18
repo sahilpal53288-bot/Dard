@@ -122,3 +122,37 @@ async function login() {
     Register Now
   </a>
 </p>
+<!DOCTYPE html>
+<html>
+<head><title>Sah365 Casino</title></head>
+<body style="text-align:center;padding:50px;font-family:Arial;background:#111;color:white;">
+
+<h2>🎰 Sah365 Casino</h2>
+
+<h3>User Login</h3>
+<input id="username" placeholder="Username"><br><br>
+<input id="password" type="password" placeholder="Password"><br><br>
+<button onclick="login()">Login & Open Game</button>
+<p id="msg"></p>
+
+<script>
+async function login(){
+  const res = await fetch("/user-login",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      username: username.value,
+      password: password.value
+    })
+  });
+  const data = await res.json();
+  msg.innerText = data.success ? "Login Successful!" : "Invalid Login!";
+  if(data.success){
+    // Open main casino page
+    window.location = "bingo.html"; // Example: Bingo game
+  }
+}
+</script>
+
+</body>
+</html>
