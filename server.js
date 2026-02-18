@@ -79,3 +79,17 @@ app.post("/update-wallet", (req, res) => {
   user.wallet += Number(amount);
   res.json({ message: "Wallet updated", wallet: user.wallet });
 });
+let admin = { username: "admin", password: "1234" };
+let adminLoggedIn = false;
+
+// Admin login
+app.post("/admin-login", (req, res) => {
+  const { username, password } = req.body;
+
+  if (username === admin.username && password === admin.password) {
+    adminLoggedIn = true;
+    res.json({ message: "Admin login success" });
+  } else {
+    res.json({ message: "Invalid admin login" });
+  }
+});
