@@ -1,28 +1,31 @@
-DOCTYPE html>
-<html>
-<head><title>Wingo Game</title></head>
-<body style="text-align:center;padding:50px;background:#222;color:white;font-family:Arial;">
-<h2>🎲 Wingo</h2>
-<h3>Guess 1–50</h3>
-
 <input id="bet" placeholder="Bet Amount">
 <input id="number" placeholder="Your Guess">
 <button onclick="playWingo()">Play</button>
 <p id="result"></p>
+<p>Wallet: ₹<span id="wallet">0</span></p>
 
 <script>
-function playWingo(){
+let username = prompt("Enter your username for wallet"); // Or pass from login page
+document.getElementById("wallet").innerText = 1000; // initial wallet
+
+async function playWingo() {
   const bet = Number(document.getElementById("bet").value);
   const guess = Number(document.getElementById("number").value);
-  const result = Math.floor(Math.random()*50)+1;
 
-  if(guess===result){
-    resultMsg = "🎉 You won! Number was "+result;
-  }else{
-    resultMsg = "❌ You lost! Number was "+result;
+  const res = await fetch("/api/wingo-play", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, bet, guess })
+  });
+
+  const data = await res.json();
+  if(!data.success){
+    document.getElementById("result").innerText = data.message;
+    return;
   }
-  document.getElementById("result").innerText = resultMsg;
+
+  let msg = data.win ? `🎉 You won! Number was ${data.result}` : `❌ You lost! Number was ${data.result}`;
+  document.getElementById("result").innerText = msg;
+  document.getElementById("wallet").innerText = data.wallet;
 }
 </script>
-</body>
-</html>
