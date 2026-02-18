@@ -56,3 +56,22 @@ app.post("/api/wingo-play", (req, res) => {
     wallet: user.wallet
   });
 });
+// Slot Game
+app.post("/api/slot-play", (req,res)=>{
+  const { username, bet } = req.body;
+  const user = users.find(u => u.username === username);
+  if(!user) return res.json({success:false, message:"User not found"});
+  if(user.wallet < bet) return res.json({success:false, message:"Low balance"});
+
+  const result = Math.floor(Math.random()*100);
+  let win = false;
+
+  if(result > 50){ 
+    user.wallet += bet*1.5;
+    win = true;
+  } else {
+    user.wallet -= bet;
+  }
+
+  res.json({success:true, win, result, wallet:user.wallet});
+});
