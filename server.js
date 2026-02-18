@@ -64,3 +64,18 @@ app.post("/admin-login", (req, res) => {
 });
 
 app.listen(PORT, () => console.log("Server running"));
+// Get all users
+app.get("/users", (req, res) => {
+  res.json(users);
+});
+
+// Update wallet
+app.post("/update-wallet", (req, res) => {
+  const { username, amount } = req.body;
+
+  const user = users.find(u => u.username === username);
+  if (!user) return res.json({ message: "User not found" });
+
+  user.wallet += Number(amount);
+  res.json({ message: "Wallet updated", wallet: user.wallet });
+});
