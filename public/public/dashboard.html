@@ -1,0 +1,28 @@
+<h2>Game Dashboard</h2>
+<h3>Wallet: <span id="wallet">0</span></h3>
+
+<input id="bet" placeholder="Bet Amount">
+<input id="number" placeholder="Guess 1-5">
+<button onclick="play()">Play</button>
+
+<p id="result"></p>
+
+<script>
+const user = localStorage.getItem("user");
+
+async function play() {
+  const res = await fetch("/play", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      username: user,
+      bet: Number(bet.value),
+      number: Number(number.value)
+    })
+  });
+
+  const data = await res.json();
+  result.innerText = data.message;
+  wallet.innerText = data.wallet;
+}
+</script>
