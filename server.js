@@ -92,3 +92,17 @@ app.post("/admin-login", (req, res) => {
     res.json({ message: "Invalid admin login" });
   }
 });
+app.post("/create-user", async (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) return res.json({ message: "Enter username & password" });
+  const exists = await User.findOne({ username });
+  if (exists) return res.json({ message: "User already exists" });
+  const user = await User.create({ username, password, wallet: 1000 });
+  res.json({ message: "User created successfully" });
+});
+const userSchema = new mongoose.Schema({
+  username: String,
+  password: String,
+  wallet: Number
+});
+const User = mongoose.model("User", userSchema);
