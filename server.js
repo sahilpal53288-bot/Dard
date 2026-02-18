@@ -31,3 +31,28 @@ app.post("/update-wallet", (req, res) => {
 });
 
 app.listen(PORT, () => console.log("Server running on port " + PORT));
+// Play Wingo
+app.post("/api/wingo-play", (req, res) => {
+  const { username, bet, guess } = req.body;
+
+  const user = users.find(u => u.username === username);
+  if (!user) return res.json({ success: false, message: "User not found" });
+  if (user.wallet < bet) return res.json({ success: false, message: "Insufficient balance" });
+
+  const result = Math.floor(Math.random() * 50) + 1;
+
+  let win = false;
+  if (guess === result) {
+    user.wallet += bet * 2; // Win multiplier = 2x
+    win = true;
+  } else {
+    user.wallet -= bet;
+  }
+
+  res.json({
+    success: true,
+    result,
+    win,
+    wallet: user.wallet
+  });
+});
