@@ -70,3 +70,25 @@ app.post("/user-login", (req,res)=>{
   if(user) res.json({ success:true, wallet:user.wallet });
   else res.json({ success:false });
 });
+<script>
+async function login() {
+
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  const res = await fetch("/user-login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  });
+
+  const data = await res.json();
+
+  if (data.success) {
+    localStorage.setItem("username", username);
+    window.location.href = "/select-game.html";  // ⚠ slash जरूरी
+  } else {
+    alert("Login Failed");
+  }
+}
+</script>
