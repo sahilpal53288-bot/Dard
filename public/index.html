@@ -1,8 +1,92 @@
-<h2>Login</h2>
-<input id="username" placeholder="Username">
-<input id="password" placeholder="Password">
-<button onclick="login()">Login</button>
-<p id="msg"></p>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SAH365 Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #000000, #1a1a1a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+    }
+
+    .login-box {
+      background: #111;
+      padding: 30px;
+      border-radius: 12px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255,215,0,0.4);
+      border: 1px solid gold;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: gold;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+    }
+
+    button {
+      width: 95%;
+      padding: 10px;
+      background: gold;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: orange;
+    }
+
+    a {
+      color: gold;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    #msg {
+      margin-top: 10px;
+      font-size: 14px;
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="login-box">
+  <div class="logo">SAH365</div>
+
+  <input id="username" placeholder="Username">
+  <input id="password" type="password" placeholder="Password">
+
+  <button onclick="login()">Login</button>
+
+  <p style="margin-top:15px;">
+    New user? <a href="register.html">Register Now</a>
+  </p>
+
+  <p id="msg"></p>
+</div>
 
 <script>
 async function login() {
@@ -24,4 +108,6 @@ async function login() {
   }
 }
 </script>
-<p>New user? <a href="register.html">Register here</a></p>
+
+</body>
+</html>
