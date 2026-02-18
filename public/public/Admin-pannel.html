@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head><title>Admin Panel</title></head>
+<body style="background:#111;color:white;text-align:center;padding:20px;font-family:Arial;">
+<h2>Admin Panel</h2>
+
+<h3>Create User</h3>
+<input id="newuser" placeholder="Username">
+<input id="newpass" placeholder="Password">
+<button onclick="createUser()">Create User</button>
+<p id="msg"></p>
+<hr>
+
+<h3>All Users</h3>
+<button onclick="loadUsers()">Refresh List</button>
+<ul id="userList"></ul>
+<hr>
+
+<h3>Update Wallet</h3>
+<input id="walletUser" placeholder="Username">
+<input id="amount" placeholder="Amount (+/-)">
+<button onclick="updateWallet()">Update</button>
+
+<script>
+async function createUser() {
+  const res = await fetch("/create-user", {
+    method:"POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({username: newuser.value, password: newpass.value})
+  });
+  const data = await res.json();
+  msg.innerText = data.message;
+  loadUsers();
+}
+
+async function loadUsers() {
+  const res = await fetch("/users");
+  const data = await res.json();
+  userList.innerHTML = "";
+  data.forEach(u=>userList.innerHTML += `<li>${u.username} - Wallet: ₹${u.wallet}</li>`);
+}
+
+async function updateWallet() {
+  const res = await fetch("/update-wallet", {
+    method:"POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({username: walletUser.value, amount: amount.value})
+  });
+  const data = await res.json();
+  msg.innerText = data.message + " (New Balance: ₹"+data.wallet+")";
+  loadUsers();
+}
+</script>
+</body>
+</html>
