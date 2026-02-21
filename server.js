@@ -9,12 +9,7 @@ app.post("/login", (req, res) => {
 
   if (!user) {
     // 👇 user automatic create
-    user = { username, wallet: 1000 };
-    users.push(user);
-  }
-
-  res.json({ success: true, wallet: user.wallet });
-});
+    user = {
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/dashboard.html");
 });
