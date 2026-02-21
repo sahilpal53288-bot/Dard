@@ -15,3 +15,6 @@ app.post("/login", (req, res) => {
 
   res.json({ success: true, wallet: user.wallet });
 });
+app.get("/", (req, res) => {
+  res.sendFile(__dirname + "/public/dashboard.html");
+});
