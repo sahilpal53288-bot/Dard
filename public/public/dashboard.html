@@ -114,3 +114,10 @@ async function play() {
 
 </body>
 </html>
+<h2>Welcome 🎮</h2>
+<h3>Wallet: <span id="wallet"></span></h3>
+
+<script>
+document.getElementById("wallet").innerText =
+localStorage.getItem("wallet");
+</script>
